@@ -8,19 +8,19 @@ const INITIAL_PROGRAM = {
     primaryLift: "Squat",
     exercises: [
       { id: "a_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
-      { id: "a_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=RDdflb8wQm0" },
-      { id: "a_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=sElYhAo8-yY" },
-      { id: "a_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=7bXPgfGzW9k" },
-      { id: "a_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/jkMT1lcTC3s" },
-      { id: "a_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/U5f8h7FDEa0" },
+      { id: "a_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
       { id: "a_a1", name: "Box Jump to Depth Landing", sets: 3, reps: "3", group: "A", videoUrl: "" },
-      { id: "a_a2", name: "Prone on Bench Hip Extension", sets: 3, reps: "8ea", group: "A", videoUrl: "https://www.youtube.com/watch?v=x1uB3KTgxeQ" },
+      { id: "a_a2", name: "Prone on Bench Hip Extension", sets: 3, reps: "8ea", group: "A", videoUrl: "" },
       { id: "a_b1", name: "Squat with Pause (3s)", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
-      { id: "a_b2", name: "TRX High Row to ER to Y", sets: 3, reps: "12", group: "B", videoUrl: "https://www.youtube.com/watch?v=-wMaaaKQCpk" },
+      { id: "a_b2", name: "TRX High Row to ER to Y", sets: 3, reps: "12", group: "B", videoUrl: "" },
       { id: "a_b3", name: "Side Plank Top Leg Raises", sets: 3, reps: "8ea", group: "B", videoUrl: "" },
-      { id: "a_c1", name: "RFE Split Squats", sets: 3, reps: "5-6", group: "C", videoUrl: "https://www.youtube.com/watch?v=U3JQwV89uBc" },
+      { id: "a_c1", name: "RFE Split Squats", sets: 3, reps: "5-6", group: "C", videoUrl: "" },
       { id: "a_c2", name: "Double Pause Push Ups", sets: 3, reps: "8ea", group: "C", videoUrl: "" },
-      { id: "a_c3", name: "High-Low Cable Crossbody Chops", sets: 3, reps: "8", group: "C", videoUrl: "https://www.youtube.com/watch?v=c1vlMlkl9Cc" },
+      { id: "a_c3", name: "High-Low Cable Crossbody Chops", sets: 3, reps: "8", group: "C", videoUrl: "" },
     ],
   },
   "Day B": {
@@ -28,19 +28,19 @@ const INITIAL_PROGRAM = {
     primaryLift: "Bench",
     exercises: [
       { id: "b_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
-      { id: "b_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=RDdflb8wQm0" },
-      { id: "b_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=sElYhAo8-yY" },
-      { id: "b_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=7bXPgfGzW9k" },
-      { id: "b_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/jkMT1lcTC3s" },
-      { id: "b_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/U5f8h7FDEa0" },
-      { id: "b_a1", name: "TGU to Hand → Low Sweep", sets: 3, reps: "5-8ea", group: "A", videoUrl: "https://youtu.be/FMnhTGrdXxE" },
+      { id: "b_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "b_a1", name: "TGU to Hand → Low Sweep", sets: 3, reps: "5-8ea", group: "A", videoUrl: "" },
       { id: "b_a2", name: "Pec Stretch", sets: 2, reps: "30s ea", group: "A", videoUrl: "" },
       { id: "b_b1", name: "BB Medium Grip Bench with Pause", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
-      { id: "b_b2", name: "Single Arm Bench Supported Row", sets: 3, reps: "10ea", group: "B", videoUrl: "https://www.youtube.com/watch?v=CLajHoP3TKc" },
-      { id: "b_b3", name: "Deadbugs with Banded Lat Engagement", sets: 3, reps: "6ea", group: "B", videoUrl: "https://www.youtube.com/shorts/fcqCJE9oUeM" },
-      { id: "b_c1", name: "Low Incline Alternating DB Press", sets: 3, reps: "6", group: "C", videoUrl: "https://www.youtube.com/watch?v=B59-28F9MY8" },
-      { id: "b_c2", name: "Staggered Stiff Legged RDL", sets: 3, reps: "6", group: "C", videoUrl: "https://www.youtube.com/watch?v=RFuCfiMfJ1w" },
-      { id: "b_c3", name: "Hanging Knee Raises", sets: 3, reps: "8ea", group: "C", videoUrl: "https://www.youtube.com/watch?v=ACnl_apRkqU" },
+      { id: "b_b2", name: "Single Arm Bench Supported Row", sets: 3, reps: "10ea", group: "B", videoUrl: "" },
+      { id: "b_b3", name: "Deadbugs with Banded Lat Engagement", sets: 3, reps: "6ea", group: "B", videoUrl: "" },
+      { id: "b_c1", name: "Low Incline Alternating DB Press", sets: 3, reps: "6", group: "C", videoUrl: "" },
+      { id: "b_c2", name: "Staggered Stiff Legged RDL", sets: 3, reps: "6", group: "C", videoUrl: "" },
+      { id: "b_c3", name: "Hanging Knee Raises", sets: 3, reps: "8ea", group: "C", videoUrl: "" },
     ],
   },
   "Day C": {
@@ -48,19 +48,19 @@ const INITIAL_PROGRAM = {
     primaryLift: "Deadlift",
     exercises: [
       { id: "c_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
-      { id: "c_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=RDdflb8wQm0" },
-      { id: "c_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=sElYhAo8-yY" },
-      { id: "c_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "https://www.youtube.com/watch?v=7bXPgfGzW9k" },
-      { id: "c_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/jkMT1lcTC3s" },
-      { id: "c_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "https://www.youtube.com/shorts/U5f8h7FDEa0" },
-      { id: "c_a1", name: "Banded KB Swing", sets: 3, reps: "6", group: "A", videoUrl: "https://www.youtube.com/watch?v=vvr21kgaxSQ" },
-      { id: "c_a2", name: "Broad Jumps", sets: 3, reps: "3", group: "A", videoUrl: "https://www.youtube.com/shorts/v0yrBWA3eEs" },
-      { id: "c_b1", name: "Deadlift with Concentric Pause", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "https://www.youtube.com/watch?v=nKLA09y-kto" },
-      { id: "c_b2", name: "2DB Floor Press - Knees at 90°", sets: 3, reps: "10", group: "B", videoUrl: "https://www.youtube.com/shorts/yGOrsUy9ZLQ" },
-      { id: "c_b3", name: "Leg Lowers", sets: 3, reps: "8ea", group: "B", videoUrl: "https://www.youtube.com/watch?v=3t9egVYlPcM" },
-      { id: "c_c1", name: "Assisted Pull Ups", sets: 3, reps: "4-5", group: "C", videoUrl: "https://www.youtube.com/shorts/65tcjz-ie8o" },
-      { id: "c_c2", name: "Shoulders Elevated Single Leg Hip Lift", sets: 3, reps: "12ea", group: "C", videoUrl: "https://www.youtube.com/watch?v=QniC8Jzka3Q" },
-      { id: "c_c3", name: "Wedge Board Medial/Lateral Calf Raises", sets: 3, reps: "10", group: "C", videoUrl: "https://www.youtube.com/shorts/9YUh47b1fdE" },
+      { id: "c_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "c_a1", name: "Banded KB Swing", sets: 3, reps: "6", group: "A", videoUrl: "" },
+      { id: "c_a2", name: "Broad Jumps", sets: 3, reps: "3", group: "A", videoUrl: "" },
+      { id: "c_b1", name: "Deadlift with Concentric Pause", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
+      { id: "c_b2", name: "2DB Floor Press - Knees at 90°", sets: 3, reps: "10", group: "B", videoUrl: "" },
+      { id: "c_b3", name: "Leg Lowers", sets: 3, reps: "8ea", group: "B", videoUrl: "" },
+      { id: "c_c1", name: "Assisted Pull Ups", sets: 3, reps: "4-5", group: "C", videoUrl: "" },
+      { id: "c_c2", name: "Shoulders Elevated Single Leg Hip Lift", sets: 3, reps: "12ea", group: "C", videoUrl: "" },
+      { id: "c_c3", name: "Wedge Board Medial/Lateral Calf Raises", sets: 3, reps: "10", group: "C", videoUrl: "" },
     ],
   },
 };
@@ -155,7 +155,6 @@ export default function FitnessTracker() {
     try { const s = localStorage.getItem("ft_manualDayDone"); return s ? JSON.parse(s) : {}; } catch { return {}; }
   });
   const [collapsedGroups, setCollapsedGroups] = useState({});
-  const [expandedWeight, setExpandedWeight] = useState({});
 
   // Persist all key state to localStorage whenever it changes
   useEffect(() => { try { localStorage.setItem("ft_program", JSON.stringify(program)); } catch {} }, [program]);
@@ -171,7 +170,7 @@ export default function FitnessTracker() {
   const logWeight = (exId, weight) => {
     setWorkoutLog(prev => ({
       ...prev,
-      [`W${currentWeek}-${activeDay}-${exId}`]: weight
+      [`${activeDay}-${exId}`]: weight
     }));
   };
 
@@ -208,13 +207,13 @@ export default function FitnessTracker() {
     "Deadlift": "#a8dadc",
   };
 
-  // Progress calculations (exercise level, week-scoped)
+  // Progress calculations (exercise level)
   const getDayProgress = (dayKey) => {
     const exercises = program[dayKey].exercises;
     const total = exercises.length;
-    const done = exercises.filter(ex => completedSets[`W${currentWeek}-${dayKey}-${ex.id}`]).length;
+    const done = exercises.filter(ex => completedSets[`${dayKey}-${ex.id}`]).length;
     const allDone = done === total;
-    const isDone = manualDayDone[`W${currentWeek}-${dayKey}`] || allDone;
+    const isDone = manualDayDone[dayKey] || allDone;
     return { total, done, allDone, isDone };
   };
 
@@ -396,7 +395,7 @@ export default function FitnessTracker() {
           {Object.entries(grouped).map(([group, exercises]) => {
             const collapseKey = `${activeDay}-${group}`;
             const isCollapsed = collapsedGroups[collapseKey];
-            const doneInGroup = exercises.filter(ex => completedSets[`W${currentWeek}-${activeDay}-${ex.id}`]).length;
+            const doneInGroup = exercises.filter(ex => completedSets[`${activeDay}-${ex.id}`]).length;
             return (
             <div key={group} style={{ marginBottom: 20 }}>
               <div
@@ -421,142 +420,130 @@ export default function FitnessTracker() {
               </div>
 
               {!isCollapsed && exercises.map(ex => {
-                const logKey = `W${currentWeek}-${activeDay}-${ex.id}`;
+                const logKey = `${activeDay}-${ex.id}`;
                 const vid = getYouTubeId(ex.videoUrl);
                 const isPrimary = ex.isPrimary;
-                const isChecked = completedSets[`W${currentWeek}-${activeDay}-${ex.id}`];
-                const weightExpanded = expandedWeight[`${activeDay}-${ex.id}`];
-                const color = liftColors[day.primaryLift];
                 return (
-                  <div key={ex.id} style={{ marginBottom: 6 }}>
-                    <div className="ex-row" style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      padding: "10px 10px",
-                      borderRadius: 6,
-                      borderLeft: isPrimary ? `3px solid ${color}` : "3px solid transparent",
-                    }}>
-                      {/* Checkbox */}
-                      <div
-                        className="set-dot"
-                        onClick={() => {
-                          const key = `W${currentWeek}-${activeDay}-${ex.id}`;
-                          setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
-                        }}
-                        style={{
-                          flexShrink: 0,
-                          width: 22, height: 22, borderRadius: "50%",
-                          background: isChecked ? color : "transparent",
-                          border: `1.5px solid ${isChecked ? color : "#333"}`,
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: 12, color: "#0d0d0f", fontWeight: "bold",
-                        }}
-                      >
-                        {isChecked ? "✓" : ""}
-                      </div>
-
-                      {/* Name + meta */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{
-                          fontSize: 13, fontWeight: 500,
-                          color: isPrimary ? color : isChecked ? "#555" : "#c8c8c0",
-                          display: "flex", alignItems: "center", gap: 6,
-                          textDecoration: isChecked ? "line-through" : "none",
-                        }}>
-                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ex.name}</span>
-                          {isPrimary && (
-                            <span style={{
-                              flexShrink: 0, fontSize: 9, letterSpacing: 2, color,
-                              border: `1px solid ${color}`, padding: "1px 5px", borderRadius: 2, opacity: 0.7
-                            }}>PRIMARY</span>
-                          )}
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 3, flexWrap: "wrap" }}>
-                          <span style={{ fontSize: 11, color: "#444" }}>{ex.sets} sets · {ex.reps}</span>
-                          <button
-                            onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: !prev[`${activeDay}-${ex.id}`] }))}
-                            style={{
-                              background: "transparent", border: "none", padding: 0,
-                              color: workoutLog[logKey] ? color : "#333",
-                              fontFamily: "inherit", fontSize: 11, cursor: "pointer",
-                            }}
-                          >
-                            {workoutLog[logKey] ? `${workoutLog[logKey]} lbs` : "+ weight"}
-                          </button>
-                        </div>
-                        {weightExpanded && (
-                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6 }}>
-                            <input
-                              type="number"
-                              placeholder="lbs"
-                              autoFocus
-                              value={workoutLog[logKey] || ""}
-                              onChange={e => logWeight(ex.id, e.target.value)}
-                              style={{
-                                width: 70, background: "#1a1a1f",
-                                border: `1px solid ${color}`, borderRadius: 4,
-                                color: "#e8e8e2", fontFamily: "inherit",
-                                fontSize: 13, padding: "5px 8px", outline: "none", textAlign: "center",
-                              }}
-                            />
-                            <span style={{ fontSize: 11, color: "#444" }}>lbs</span>
-                            <button onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: false }))} style={{
-                              background: "transparent", border: "none", color: "#444",
-                              fontFamily: "inherit", fontSize: 11, cursor: "pointer", padding: "0 4px"
-                            }}>done</button>
-                          </div>
+                  <div key={ex.id} className="ex-row" style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr auto auto",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "12px 10px",
+                    borderRadius: 6,
+                    marginBottom: 4,
+                    borderLeft: isPrimary ? `3px solid ${liftColors[day.primaryLift]}` : "3px solid transparent",
+                  }}>
+                    {/* Left: name + sets */}
+                    <div>
+                      <div style={{
+                        fontSize: 13,
+                        fontWeight: 500,
+                        color: isPrimary ? liftColors[day.primaryLift] : "#c8c8c0",
+                        marginBottom: 6,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8
+                      }}>
+                        {ex.name}
+                        {isPrimary && (
+                          <span style={{
+                            fontSize: 9, letterSpacing: 2, color: liftColors[day.primaryLift],
+                            border: `1px solid ${liftColors[day.primaryLift]}`,
+                            padding: "1px 5px", borderRadius: 2, opacity: 0.7
+                          }}>PRIMARY</span>
                         )}
                       </div>
-
-                      {/* Play button */}
-                      <button
-                        onClick={() => {
-                          if (vid) setVideoModal(ex.videoUrl);
-                          else { setEditingVideo(ex.id); setVideoInput(ex.videoUrl || ""); }
-                        }}
-                        style={{
-                          flexShrink: 0,
-                          width: 38, height: 38, borderRadius: "50%",
-                          background: vid ? color : "#1a1a1f",
-                          border: `1px solid ${vid ? color : "#252528"}`,
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          cursor: "pointer", fontSize: vid ? 14 : 16,
-                          color: vid ? "#0d0d0f" : "#333",
-                          transition: "all 0.15s",
-                        }}
-                      >
-                        {vid ? "▶" : "+"}
-                      </button>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                        <span style={{ fontSize: 11, color: "#444" }}>{ex.sets} sets · {ex.reps}</span>
+                        <div
+                          className="set-dot"
+                          onClick={() => {
+                            const key = `${activeDay}-${ex.id}`;
+                            setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
+                          }}
+                          style={{
+                            width: 20, height: 20, borderRadius: "50%",
+                            background: completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "transparent",
+                            border: `1.5px solid ${completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "#333"}`,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: 11, color: "#0d0d0f", fontWeight: "bold",
+                          }}
+                        >
+                          {completedSets[`${activeDay}-${ex.id}`] ? "✓" : ""}
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Video URL edit row */}
-                    {editingVideo === ex.id && (
-                      <div style={{ display: "flex", gap: 6, padding: "6px 10px 10px 42px", flexWrap: "wrap" }}>
-                        <input
-                          type="text"
-                          placeholder="Paste YouTube URL..."
-                          value={videoInput}
-                          onChange={e => setVideoInput(e.target.value)}
-                          style={{
-                            flex: 1, minWidth: 180, background: "#111114",
-                            border: "1px solid #333", borderRadius: 4,
-                            color: "#e8e8e2", fontFamily: "inherit",
-                            fontSize: 11, padding: "6px 10px", outline: "none"
-                          }}
-                        />
-                        <button onClick={() => saveVideoUrl(ex.id)} style={{
-                          background: color, color: "#0d0d0f", border: "none",
-                          borderRadius: 4, padding: "6px 12px", fontFamily: "inherit",
-                          fontSize: 11, cursor: "pointer", fontWeight: 600
-                        }}>Save</button>
-                        <button onClick={() => setEditingVideo(null)} style={{
-                          background: "transparent", color: "#555", border: "1px solid #2a2a2f",
-                          borderRadius: 4, padding: "6px 10px", fontFamily: "inherit",
-                          fontSize: 11, cursor: "pointer"
-                        }}>✕</button>
-                      </div>
-                    )}
+                    {/* Weight input */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <input
+                        type="number"
+                        placeholder="lbs"
+                        value={workoutLog[logKey] || ""}
+                        onChange={e => logWeight(ex.id, e.target.value)}
+                        style={{
+                          width: 62,
+                          background: "#111114",
+                          border: "1px solid #252528",
+                          borderRadius: 4,
+                          color: "#e8e8e2",
+                          fontFamily: "inherit",
+                          fontSize: 12,
+                          padding: "6px 8px",
+                          outline: "none",
+                          textAlign: "center",
+                        }}
+                      />
+                      <span style={{ fontSize: 10, color: "#333" }}>lbs</span>
+                    </div>
+
+                    {/* Video button */}
+                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      {editingVideo === ex.id ? (
+                        <div style={{ display: "flex", gap: 6 }}>
+                          <input
+                            type="text"
+                            placeholder="YouTube URL"
+                            value={videoInput}
+                            onChange={e => setVideoInput(e.target.value)}
+                            style={{
+                              width: 160, background: "#111114",
+                              border: "1px solid #333", borderRadius: 4,
+                              color: "#e8e8e2", fontFamily: "inherit",
+                              fontSize: 11, padding: "5px 8px", outline: "none"
+                            }}
+                          />
+                          <button onClick={() => saveVideoUrl(ex.id)} style={{
+                            background: "#4cc9f0", color: "#0d0d0f", border: "none",
+                            borderRadius: 4, padding: "5px 10px", fontFamily: "inherit",
+                            fontSize: 11, cursor: "pointer", fontWeight: 500
+                          }}>Save</button>
+                          <button onClick={() => setEditingVideo(null)} style={{
+                            background: "transparent", color: "#555", border: "1px solid #2a2a2f",
+                            borderRadius: 4, padding: "5px 8px", fontFamily: "inherit",
+                            fontSize: 11, cursor: "pointer"
+                          }}>✕</button>
+                        </div>
+                      ) : (
+                        <button className="video-btn" onClick={() => {
+                          if (vid) setVideoModal(ex.videoUrl);
+                          else { setEditingVideo(ex.id); setVideoInput(ex.videoUrl || ""); }
+                        }} style={{
+                          background: vid ? "#1a1a1f" : "transparent",
+                          border: `1px solid ${vid ? "#3a3a45" : "#1f1f24"}`,
+                          borderRadius: 4,
+                          color: vid ? "#e8e8e2" : "#333",
+                          fontFamily: "inherit",
+                          fontSize: 11,
+                          padding: "5px 10px",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {vid ? "▶ Video" : "+ Video"}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -570,7 +557,7 @@ export default function FitnessTracker() {
               const { isDone, allDone } = getDayProgress(activeDay);
               const color = liftColors[day.primaryLift];
               return (
-                <button onClick={() => setManualDayDone(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: !prev[`W${currentWeek}-${activeDay}`] }))} style={{
+                <button onClick={() => setManualDayDone(prev => ({ ...prev, [activeDay]: !prev[activeDay] }))} style={{
                   background: isDone ? color : "transparent",
                   color: isDone ? "#0d0d0f" : "#555",
                   border: `1px solid ${isDone ? color : "#2a2a2f"}`,
@@ -592,8 +579,8 @@ export default function FitnessTracker() {
             </div>
             <textarea
               placeholder="How'd it feel today..."
-              value={notes[`W${currentWeek}-${activeDay}`] || ""}
-              onChange={e => setNotes(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: e.target.value }))}
+              value={notes[activeDay] || ""}
+              onChange={e => setNotes(prev => ({ ...prev, [activeDay]: e.target.value }))}
               style={{
                 width: "100%", minHeight: 80,
                 background: "#111114", border: "1px solid #1f1f24",
