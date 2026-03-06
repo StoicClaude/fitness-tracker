@@ -1,25 +1,715 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
 
-function App() {
+const PRIMARY_LIFTS = ["Squat", "Bench", "Deadlift"];
+
+const INITIAL_PROGRAM = {
+  "Day A": {
+    focus: "Squat Day",
+    primaryLift: "Squat",
+    exercises: [
+      { id: "a_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "a_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "a_a1", name: "Box Jump to Depth Landing", sets: 3, reps: "3", group: "A", videoUrl: "" },
+      { id: "a_a2", name: "Prone on Bench Hip Extension", sets: 3, reps: "8ea", group: "A", videoUrl: "" },
+      { id: "a_b1", name: "Squat with Pause (3s)", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
+      { id: "a_b2", name: "TRX High Row to ER to Y", sets: 3, reps: "12", group: "B", videoUrl: "" },
+      { id: "a_b3", name: "Side Plank Top Leg Raises", sets: 3, reps: "8ea", group: "B", videoUrl: "" },
+      { id: "a_c1", name: "RFE Split Squats", sets: 3, reps: "5-6", group: "C", videoUrl: "" },
+      { id: "a_c2", name: "Double Pause Push Ups", sets: 3, reps: "8ea", group: "C", videoUrl: "" },
+      { id: "a_c3", name: "High-Low Cable Crossbody Chops", sets: 3, reps: "8", group: "C", videoUrl: "" },
+    ],
+  },
+  "Day B": {
+    focus: "Bench Day",
+    primaryLift: "Bench",
+    exercises: [
+      { id: "b_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "b_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "b_a1", name: "TGU to Hand → Low Sweep", sets: 3, reps: "5-8ea", group: "A", videoUrl: "" },
+      { id: "b_a2", name: "Pec Stretch", sets: 2, reps: "30s ea", group: "A", videoUrl: "" },
+      { id: "b_b1", name: "BB Medium Grip Bench with Pause", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
+      { id: "b_b2", name: "Single Arm Bench Supported Row", sets: 3, reps: "10ea", group: "B", videoUrl: "" },
+      { id: "b_b3", name: "Deadbugs with Banded Lat Engagement", sets: 3, reps: "6ea", group: "B", videoUrl: "" },
+      { id: "b_c1", name: "Low Incline Alternating DB Press", sets: 3, reps: "6", group: "C", videoUrl: "" },
+      { id: "b_c2", name: "Staggered Stiff Legged RDL", sets: 3, reps: "6", group: "C", videoUrl: "" },
+      { id: "b_c3", name: "Hanging Knee Raises", sets: 3, reps: "8ea", group: "C", videoUrl: "" },
+    ],
+  },
+  "Day C": {
+    focus: "Deadlift Day",
+    primaryLift: "Deadlift",
+    exercises: [
+      { id: "c_warmup1", name: "Lying on Foam Roller W to Ys", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup2", name: "Open 1/2 Kneel Adductor Mob (w/ ankle mob)", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup3", name: "Reverse Nordics", sets: 2, reps: "10", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup4", name: "Banded Shoulder Internal Rotations", sets: 2, reps: "12ea", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup5", name: "2DB/KB OH Carry", sets: 2, reps: "2L", group: "Warmup", videoUrl: "" },
+      { id: "c_warmup6", name: "Assisted Hip Airplanes", sets: 2, reps: "8ea", group: "Warmup", videoUrl: "" },
+      { id: "c_a1", name: "Banded KB Swing", sets: 3, reps: "6", group: "A", videoUrl: "" },
+      { id: "c_a2", name: "Broad Jumps", sets: 3, reps: "3", group: "A", videoUrl: "" },
+      { id: "c_b1", name: "Deadlift with Concentric Pause", sets: 4, reps: "3", group: "B", isPrimary: true, videoUrl: "" },
+      { id: "c_b2", name: "2DB Floor Press - Knees at 90°", sets: 3, reps: "10", group: "B", videoUrl: "" },
+      { id: "c_b3", name: "Leg Lowers", sets: 3, reps: "8ea", group: "B", videoUrl: "" },
+      { id: "c_c1", name: "Assisted Pull Ups", sets: 3, reps: "4-5", group: "C", videoUrl: "" },
+      { id: "c_c2", name: "Shoulders Elevated Single Leg Hip Lift", sets: 3, reps: "12ea", group: "C", videoUrl: "" },
+      { id: "c_c3", name: "Wedge Board Medial/Lateral Calf Raises", sets: 3, reps: "10", group: "C", videoUrl: "" },
+    ],
+  },
+};
+
+const INITIAL_LIFT_HISTORY = {
+  "Squat": [{ week: "W1", weight: 155 }, { week: "W2", weight: 160 }, { week: "W3", weight: 165 }],
+  "Bench": [{ week: "W1", weight: 115 }, { week: "W2", weight: 120 }, { week: "W3", weight: 120 }],
+  "Deadlift": [{ week: "W1", weight: 185 }, { week: "W2", weight: 195 }, { week: "W3", weight: 200 }],
+};
+
+function getYouTubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&?/\s]{11})/);
+  return m ? m[1] : null;
+}
+
+function MiniChart({ data, color }) {
+  if (!data || data.length < 2) return null;
+  const weights = data.map(d => d.weight);
+  const min = Math.min(...weights) - 10;
+  const max = Math.max(...weights) + 10;
+  const w = 120, h = 40;
+  const pts = data.map((d, i) => {
+    const x = (i / (data.length - 1)) * w;
+    const y = h - ((d.weight - min) / (max - min)) * h;
+    return `${x},${y}`;
+  }).join(" ");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <svg width={w} height={h} style={{ display: "block" }}>
+      <polyline points={pts} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {data.map((d, i) => {
+        const x = (i / (data.length - 1)) * w;
+        const y = h - ((d.weight - min) / (max - min)) * h;
+        return <circle key={i} cx={x} cy={y} r="3.5" fill={color} />;
+      })}
+    </svg>
+  );
+}
+
+function VideoModal({ url, onClose }) {
+  const vid = getYouTubeId(url);
+  if (!vid) return null;
+  return (
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 1000,
+      display: "flex", alignItems: "center", justifyContent: "center"
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: "relative", width: "min(90vw,800px)", aspectRatio: "16/9" }}>
+        <iframe
+          src={`https://www.youtube.com/embed/${vid}?autoplay=1`}
+          style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+        <button onClick={onClose} style={{
+          position: "absolute", top: -14, right: -14, background: "#e63946",
+          border: "none", borderRadius: "50%", width: 30, height: 30, color: "#fff",
+          fontWeight: "bold", cursor: "pointer", fontSize: 16, lineHeight: "30px"
+        }}>×</button>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default function FitnessTracker() {
+  const [tab, setTab] = useState("log");
+  const [activeDay, setActiveDay] = useState("Day A");
+  const [program, setProgram] = useState(() => {
+    try { const s = localStorage.getItem("ft_program"); return s ? JSON.parse(s) : INITIAL_PROGRAM; } catch { return INITIAL_PROGRAM; }
+  });
+  const [liftHistory, setLiftHistory] = useState(() => {
+    try { const s = localStorage.getItem("ft_liftHistory"); return s ? JSON.parse(s) : INITIAL_LIFT_HISTORY; } catch { return INITIAL_LIFT_HISTORY; }
+  });
+  const [workoutLog, setWorkoutLog] = useState(() => {
+    try { const s = localStorage.getItem("ft_workoutLog"); return s ? JSON.parse(s) : {}; } catch { return {}; }
+  });
+  const [videoModal, setVideoModal] = useState(null);
+  const [editingVideo, setEditingVideo] = useState(null);
+  const [videoInput, setVideoInput] = useState("");
+  const [newLiftEntry, setNewLiftEntry] = useState({ lift: "Squat", weight: "", week: "" });
+  const [completedSets, setCompletedSets] = useState(() => {
+    try { const s = localStorage.getItem("ft_completedSets"); return s ? JSON.parse(s) : {}; } catch { return {}; }
+  });
+  const [notes, setNotes] = useState(() => {
+    try { const s = localStorage.getItem("ft_notes"); return s ? JSON.parse(s) : {}; } catch { return {}; }
+  });
+  const [currentWeek, setCurrentWeek] = useState(() => {
+    try { const s = localStorage.getItem("ft_currentWeek"); return s ? JSON.parse(s) : 4; } catch { return 4; }
+  });
+  const [manualDayDone, setManualDayDone] = useState(() => {
+    try { const s = localStorage.getItem("ft_manualDayDone"); return s ? JSON.parse(s) : {}; } catch { return {}; }
+  });
+  const [collapsedGroups, setCollapsedGroups] = useState({});
+
+  // Persist all key state to localStorage whenever it changes
+  useEffect(() => { try { localStorage.setItem("ft_program", JSON.stringify(program)); } catch {} }, [program]);
+  useEffect(() => { try { localStorage.setItem("ft_liftHistory", JSON.stringify(liftHistory)); } catch {} }, [liftHistory]);
+  useEffect(() => { try { localStorage.setItem("ft_workoutLog", JSON.stringify(workoutLog)); } catch {} }, [workoutLog]);
+  useEffect(() => { try { localStorage.setItem("ft_completedSets", JSON.stringify(completedSets)); } catch {} }, [completedSets]);
+  useEffect(() => { try { localStorage.setItem("ft_notes", JSON.stringify(notes)); } catch {} }, [notes]);
+  useEffect(() => { try { localStorage.setItem("ft_currentWeek", JSON.stringify(currentWeek)); } catch {} }, [currentWeek]);
+  useEffect(() => { try { localStorage.setItem("ft_manualDayDone", JSON.stringify(manualDayDone)); } catch {} }, [manualDayDone]);
+
+  const day = program[activeDay];
+
+  const toggleSet = (exId, setIdx) => {
+    const key = `${activeDay}-${exId}-${setIdx}`;
+    setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const logWeight = (exId, weight) => {
+    setWorkoutLog(prev => ({
+      ...prev,
+      [`${activeDay}-${exId}`]: weight
+    }));
+  };
+
+  const saveVideoUrl = (exId) => {
+    setProgram(prev => {
+      const updated = { ...prev };
+      updated[activeDay] = {
+        ...updated[activeDay],
+        exercises: updated[activeDay].exercises.map(ex =>
+          ex.id === exId ? { ...ex, videoUrl: videoInput } : ex
+        )
+      };
+      return updated;
+    });
+    setEditingVideo(null);
+    setVideoInput("");
+  };
+
+  const addLiftEntry = () => {
+    if (!newLiftEntry.weight || !newLiftEntry.week) return;
+    setLiftHistory(prev => ({
+      ...prev,
+      [newLiftEntry.lift]: [...(prev[newLiftEntry.lift] || []), {
+        week: newLiftEntry.week,
+        weight: parseFloat(newLiftEntry.weight)
+      }]
+    }));
+    setNewLiftEntry(n => ({ ...n, weight: "", week: "" }));
+  };
+
+  const liftColors = {
+    "Squat": "#f4a261",
+    "Bench": "#4cc9f0",
+    "Deadlift": "#a8dadc",
+  };
+
+  // Progress calculations (exercise level)
+  const getDayProgress = (dayKey) => {
+    const exercises = program[dayKey].exercises;
+    const total = exercises.length;
+    const done = exercises.filter(ex => completedSets[`${dayKey}-${ex.id}`]).length;
+    const allDone = done === total;
+    const isDone = manualDayDone[dayKey] || allDone;
+    return { total, done, allDone, isDone };
+  };
+
+  const weekDaysComplete = Object.keys(program).filter(d => getDayProgress(d).isDone).length;
+  const weekTotal = Object.keys(program).reduce((sum, d) => sum + getDayProgress(d).total, 0);
+  const weekDone = Object.keys(program).reduce((sum, d) => sum + getDayProgress(d).done, 0);
+
+  const groupOrder = ["Warmup", "A", "B", "C"];
+  const grouped = groupOrder.reduce((acc, g) => {
+    const exs = day.exercises.filter(e => e.group === g);
+    if (exs.length) acc[g] = exs;
+    return acc;
+  }, {});
+
+  const groupLabels = { Warmup: "Movement Prep", A: "Block A", B: "Block B", C: "Block C" };
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#0d0d0f",
+      color: "#e8e8e2",
+      fontFamily: "'DM Mono', 'Courier New', monospace",
+      padding: "0",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap');
+        * { box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 4px; } 
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        .day-btn:hover { background: #1a1a1f !important; }
+        .ex-row:hover { background: rgba(255,255,255,0.02) !important; }
+        .tab-btn { transition: all 0.2s; }
+        .set-dot { transition: all 0.15s; cursor: pointer; }
+        .set-dot:hover { transform: scale(1.2); }
+        .video-btn:hover { opacity: 0.8; }
+        input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+      `}</style>
+
+      {/* Header */}
+      <div style={{
+        background: "#111114",
+        borderBottom: "1px solid #1f1f24",
+        padding: "20px 28px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }}>
+        <div>
+          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: "#e8e8e2" }}>
+            KENT SANDS
+          </div>
+          <div style={{ fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase" }}>
+            Phase 3 · Isometric Control
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          {["log", "progress"].map(t => (
+            <button key={t} className="tab-btn" onClick={() => setTab(t)} style={{
+              background: tab === t ? "#e8e8e2" : "transparent",
+              color: tab === t ? "#0d0d0f" : "#555",
+              border: "1px solid",
+              borderColor: tab === t ? "#e8e8e2" : "#2a2a2f",
+              borderRadius: 4,
+              padding: "7px 16px",
+              fontFamily: "inherit",
+              fontSize: 11,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+              cursor: "pointer",
+            }}>
+              {t === "log" ? "Workout Log" : "Progress"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {tab === "log" && (
+        <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 20px" }}>
+
+          {/* Week selector + weekly progress */}
+          <div style={{
+            background: "#111114", border: "1px solid #1f1f24",
+            borderRadius: 8, padding: "16px 20px", marginBottom: 20,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 12 }}>
+              {/* Week picker */}
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 10, letterSpacing: 3, color: "#444", textTransform: "uppercase" }}>Current Week</span>
+                <div style={{ display: "flex", gap: 4 }}>
+                  {[1,2,3,4,5].map(w => (
+                    <button key={w} onClick={() => setCurrentWeek(w)} style={{
+                      width: 30, height: 30, borderRadius: 4,
+                      background: currentWeek === w ? "#e8e8e2" : "transparent",
+                      color: currentWeek === w ? "#0d0d0f" : "#444",
+                      border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#252528"}`,
+                      fontFamily: "inherit", fontSize: 12, cursor: "pointer", fontWeight: 500,
+                    }}>{w}</button>
+                  ))}
+                </div>
+              </div>
+              {/* Week summary stats */}
+              <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#e8e8e2", lineHeight: 1 }}>
+                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#444" }}>/3</span>
+                  </div>
+                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#e8e8e2", lineHeight: 1 }}>
+                    {weekDone}<span style={{ fontSize: 14, color: "#444" }}>/{weekTotal}</span>
+                  </div>
+                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
+                </div>
+              </div>
+            </div>
+            {/* Week progress bar */}
+            <div style={{ height: 4, background: "#1a1a1f", borderRadius: 2, overflow: "hidden" }}>
+              <div style={{
+                height: "100%", borderRadius: 2,
+                width: `${weekTotal > 0 ? (weekDone / weekTotal) * 100 : 0}%`,
+                background: "linear-gradient(90deg, #f4a261, #4cc9f0)",
+                transition: "width 0.3s ease",
+              }} />
+            </div>
+          </div>
+
+          {/* Day Selector */}
+          <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
+            {Object.entries(program).map(([d, info]) => {
+              const { total, done, isDone } = getDayProgress(d);
+              const pct = total > 0 ? (done / total) * 100 : 0;
+              const color = liftColors[info.primaryLift];
+              return (
+                <button key={d} className="day-btn" onClick={() => setActiveDay(d)} style={{
+                  flex: 1,
+                  background: activeDay === d ? "#1a1a1f" : "transparent",
+                  border: `1px solid ${isDone ? color : activeDay === d ? "#3a3a45" : "#1f1f24"}`,
+                  borderRadius: 6,
+                  padding: "14px 12px",
+                  color: activeDay === d ? "#e8e8e2" : "#444",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  textAlign: "center",
+                  position: "relative",
+                }}>
+                  {isDone && (
+                    <div style={{
+                      position: "absolute", top: 6, right: 8,
+                      fontSize: 10, color, opacity: 0.8
+                    }}>✓</div>
+                  )}
+                  <div style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: 20, letterSpacing: 2,
+                    color: activeDay === d ? color : isDone ? color : "#333"
+                  }}>{d}</div>
+                  <div style={{ fontSize: 10, letterSpacing: 1, marginTop: 2, marginBottom: 8, textTransform: "uppercase" }}>
+                    {info.focus}
+                  </div>
+                  {/* Per-day progress bar */}
+                  <div style={{ height: 3, background: "#1a1a1f", borderRadius: 2, overflow: "hidden", marginBottom: 6 }}>
+                    <div style={{
+                      height: "100%", borderRadius: 2,
+                      width: `${pct}%`, background: color,
+                      transition: "width 0.3s ease",
+                    }} />
+                  </div>
+                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 1 }}>
+                    {done}/{total} exercises
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Exercise Blocks */}
+          {Object.entries(grouped).map(([group, exercises]) => {
+            const collapseKey = `${activeDay}-${group}`;
+            const isCollapsed = collapsedGroups[collapseKey];
+            const doneInGroup = exercises.filter(ex => completedSets[`${activeDay}-${ex.id}`]).length;
+            return (
+            <div key={group} style={{ marginBottom: 20 }}>
+              <div
+                onClick={() => setCollapsedGroups(prev => ({ ...prev, [collapseKey]: !prev[collapseKey] }))}
+                style={{
+                  fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
+                  color: "#555", marginBottom: isCollapsed ? 0 : 10,
+                  paddingBottom: 8, borderBottom: "1px solid #1a1a1f",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  cursor: "pointer", userSelect: "none",
+                }}
+              >
+                <span>{groupLabels[group]}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ fontSize: 9, color: doneInGroup === exercises.length ? "#57cc99" : "#333" }}>
+                    {doneInGroup}/{exercises.length}
+                  </span>
+                  <span style={{ fontSize: 14, color: "#333", transform: isCollapsed ? "rotate(-90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform 0.2s" }}>
+                    ▾
+                  </span>
+                </div>
+              </div>
+
+              {!isCollapsed && exercises.map(ex => {
+                const logKey = `${activeDay}-${ex.id}`;
+                const vid = getYouTubeId(ex.videoUrl);
+                const isPrimary = ex.isPrimary;
+                return (
+                  <div key={ex.id} className="ex-row" style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr auto auto",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "12px 10px",
+                    borderRadius: 6,
+                    marginBottom: 4,
+                    borderLeft: isPrimary ? `3px solid ${liftColors[day.primaryLift]}` : "3px solid transparent",
+                  }}>
+                    {/* Left: name + sets */}
+                    <div>
+                      <div style={{
+                        fontSize: 13,
+                        fontWeight: 500,
+                        color: isPrimary ? liftColors[day.primaryLift] : "#c8c8c0",
+                        marginBottom: 6,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8
+                      }}>
+                        {ex.name}
+                        {isPrimary && (
+                          <span style={{
+                            fontSize: 9, letterSpacing: 2, color: liftColors[day.primaryLift],
+                            border: `1px solid ${liftColors[day.primaryLift]}`,
+                            padding: "1px 5px", borderRadius: 2, opacity: 0.7
+                          }}>PRIMARY</span>
+                        )}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                        <span style={{ fontSize: 11, color: "#444" }}>{ex.sets} sets · {ex.reps}</span>
+                        <div
+                          className="set-dot"
+                          onClick={() => {
+                            const key = `${activeDay}-${ex.id}`;
+                            setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
+                          }}
+                          style={{
+                            width: 20, height: 20, borderRadius: "50%",
+                            background: completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "transparent",
+                            border: `1.5px solid ${completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "#333"}`,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: 11, color: "#0d0d0f", fontWeight: "bold",
+                          }}
+                        >
+                          {completedSets[`${activeDay}-${ex.id}`] ? "✓" : ""}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Weight input */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <input
+                        type="number"
+                        placeholder="lbs"
+                        value={workoutLog[logKey] || ""}
+                        onChange={e => logWeight(ex.id, e.target.value)}
+                        style={{
+                          width: 62,
+                          background: "#111114",
+                          border: "1px solid #252528",
+                          borderRadius: 4,
+                          color: "#e8e8e2",
+                          fontFamily: "inherit",
+                          fontSize: 12,
+                          padding: "6px 8px",
+                          outline: "none",
+                          textAlign: "center",
+                        }}
+                      />
+                      <span style={{ fontSize: 10, color: "#333" }}>lbs</span>
+                    </div>
+
+                    {/* Video button */}
+                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      {editingVideo === ex.id ? (
+                        <div style={{ display: "flex", gap: 6 }}>
+                          <input
+                            type="text"
+                            placeholder="YouTube URL"
+                            value={videoInput}
+                            onChange={e => setVideoInput(e.target.value)}
+                            style={{
+                              width: 160, background: "#111114",
+                              border: "1px solid #333", borderRadius: 4,
+                              color: "#e8e8e2", fontFamily: "inherit",
+                              fontSize: 11, padding: "5px 8px", outline: "none"
+                            }}
+                          />
+                          <button onClick={() => saveVideoUrl(ex.id)} style={{
+                            background: "#4cc9f0", color: "#0d0d0f", border: "none",
+                            borderRadius: 4, padding: "5px 10px", fontFamily: "inherit",
+                            fontSize: 11, cursor: "pointer", fontWeight: 500
+                          }}>Save</button>
+                          <button onClick={() => setEditingVideo(null)} style={{
+                            background: "transparent", color: "#555", border: "1px solid #2a2a2f",
+                            borderRadius: 4, padding: "5px 8px", fontFamily: "inherit",
+                            fontSize: 11, cursor: "pointer"
+                          }}>✕</button>
+                        </div>
+                      ) : (
+                        <button className="video-btn" onClick={() => {
+                          if (vid) setVideoModal(ex.videoUrl);
+                          else { setEditingVideo(ex.id); setVideoInput(ex.videoUrl || ""); }
+                        }} style={{
+                          background: vid ? "#1a1a1f" : "transparent",
+                          border: `1px solid ${vid ? "#3a3a45" : "#1f1f24"}`,
+                          borderRadius: 4,
+                          color: vid ? "#e8e8e2" : "#333",
+                          fontFamily: "inherit",
+                          fontSize: 11,
+                          padding: "5px 10px",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {vid ? "▶ Video" : "+ Video"}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            );
+          })}
+
+          {/* Mark Day Complete */}
+          <div style={{ marginTop: 20, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+            {(() => {
+              const { isDone, allDone } = getDayProgress(activeDay);
+              const color = liftColors[day.primaryLift];
+              return (
+                <button onClick={() => setManualDayDone(prev => ({ ...prev, [activeDay]: !prev[activeDay] }))} style={{
+                  background: isDone ? color : "transparent",
+                  color: isDone ? "#0d0d0f" : "#555",
+                  border: `1px solid ${isDone ? color : "#2a2a2f"}`,
+                  borderRadius: 4, padding: "8px 18px",
+                  fontFamily: "inherit", fontSize: 11,
+                  letterSpacing: 2, textTransform: "uppercase",
+                  cursor: "pointer", fontWeight: isDone ? 600 : 400,
+                }}>
+                  {isDone ? "✓ Day Complete" : allDone ? "✓ Mark Complete" : "Mark Day Complete"}
+                </button>
+              );
+            })()}
+          </div>
+
+          {/* Notes */}
+          <div style={{ marginTop: 20 }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 8, textTransform: "uppercase" }}>
+              Session Notes
+            </div>
+            <textarea
+              placeholder="How'd it feel today..."
+              value={notes[activeDay] || ""}
+              onChange={e => setNotes(prev => ({ ...prev, [activeDay]: e.target.value }))}
+              style={{
+                width: "100%", minHeight: 80,
+                background: "#111114", border: "1px solid #1f1f24",
+                borderRadius: 6, color: "#888", fontFamily: "inherit",
+                fontSize: 12, padding: "12px 14px", resize: "vertical",
+                outline: "none"
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {tab === "progress" && (
+        <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 20px" }}>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 20, textTransform: "uppercase" }}>
+              Primary Lift Progress
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+              {Object.entries(liftHistory).map(([lift, history]) => {
+                const latest = history[history.length - 1]?.weight;
+                const prev = history[history.length - 2]?.weight;
+                const delta = latest && prev ? latest - prev : null;
+                const color = liftColors[lift] || "#4cc9f0";
+                return (
+                  <div key={lift} style={{
+                    background: "#111114",
+                    border: "1px solid #1f1f24",
+                    borderRadius: 8,
+                    padding: "20px",
+                    borderTop: `3px solid ${color}`
+                  }}>
+                    <div style={{ fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>
+                      {lift}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 14 }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color, lineHeight: 1 }}>
+                        {latest}
+                      </span>
+                      <span style={{ fontSize: 12, color: "#444" }}>lbs</span>
+                      {delta !== null && (
+                        <span style={{
+                          fontSize: 12,
+                          color: delta > 0 ? "#57cc99" : delta < 0 ? "#e63946" : "#555"
+                        }}>
+                          {delta > 0 ? `+${delta}` : delta} this wk
+                        </span>
+                      )}
+                    </div>
+                    <MiniChart data={history} color={color} />
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+                      {history.map((h, i) => (
+                        <div key={i} style={{ textAlign: "center" }}>
+                          <div style={{ fontSize: 9, color: "#333", letterSpacing: 1 }}>{h.week}</div>
+                          <div style={{ fontSize: 11, color: "#666" }}>{h.weight}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Log New Weight */}
+          <div style={{
+            background: "#111114",
+            border: "1px solid #1f1f24",
+            borderRadius: 8,
+            padding: "20px"
+          }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 16, textTransform: "uppercase" }}>
+              Log New Entry
+            </div>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <select
+                value={newLiftEntry.lift}
+                onChange={e => setNewLiftEntry(n => ({ ...n, lift: e.target.value }))}
+                style={{
+                  background: "#0d0d0f", border: "1px solid #252528",
+                  borderRadius: 4, color: "#e8e8e2", fontFamily: "inherit",
+                  fontSize: 12, padding: "8px 12px", outline: "none"
+                }}
+              >
+                {PRIMARY_LIFTS.map(l => <option key={l} value={l}>{l}</option>)}
+              </select>
+              <input
+                type="text"
+                placeholder="Week (e.g. W4)"
+                value={newLiftEntry.week}
+                onChange={e => setNewLiftEntry(n => ({ ...n, week: e.target.value }))}
+                style={{
+                  width: 120, background: "#0d0d0f",
+                  border: "1px solid #252528", borderRadius: 4,
+                  color: "#e8e8e2", fontFamily: "inherit",
+                  fontSize: 12, padding: "8px 12px", outline: "none"
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Weight (lbs)"
+                value={newLiftEntry.weight}
+                onChange={e => setNewLiftEntry(n => ({ ...n, weight: e.target.value }))}
+                style={{
+                  width: 130, background: "#0d0d0f",
+                  border: "1px solid #252528", borderRadius: 4,
+                  color: "#e8e8e2", fontFamily: "inherit",
+                  fontSize: 12, padding: "8px 12px", outline: "none"
+                }}
+              />
+              <button onClick={addLiftEntry} style={{
+                background: "#e8e8e2", color: "#0d0d0f",
+                border: "none", borderRadius: 4,
+                padding: "8px 20px", fontFamily: "inherit",
+                fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
+                cursor: "pointer", fontWeight: 500
+              }}>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {videoModal && <VideoModal url={videoModal} onClose={() => setVideoModal(null)} />}
+    </div>
+  );
+}
