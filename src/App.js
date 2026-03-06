@@ -170,7 +170,7 @@ export default function FitnessTracker() {
   const logWeight = (exId, weight) => {
     setWorkoutLog(prev => ({
       ...prev,
-      [`${activeDay}-${exId}`]: weight
+      [`W${currentWeek}-${activeDay}-${exId}`]: weight
     }));
   };
 
@@ -207,13 +207,13 @@ export default function FitnessTracker() {
     "Deadlift": "#a8dadc",
   };
 
-  // Progress calculations (exercise level)
+  // Progress calculations (exercise level, week-scoped)
   const getDayProgress = (dayKey) => {
     const exercises = program[dayKey].exercises;
     const total = exercises.length;
-    const done = exercises.filter(ex => completedSets[`${dayKey}-${ex.id}`]).length;
+    const done = exercises.filter(ex => completedSets[`W${currentWeek}-${dayKey}-${ex.id}`]).length;
     const allDone = done === total;
-    const isDone = manualDayDone[dayKey] || allDone;
+    const isDone = manualDayDone[`W${currentWeek}-${dayKey}`] || allDone;
     return { total, done, allDone, isDone };
   };
 
@@ -395,7 +395,7 @@ export default function FitnessTracker() {
           {Object.entries(grouped).map(([group, exercises]) => {
             const collapseKey = `${activeDay}-${group}`;
             const isCollapsed = collapsedGroups[collapseKey];
-            const doneInGroup = exercises.filter(ex => completedSets[`${activeDay}-${ex.id}`]).length;
+            const doneInGroup = exercises.filter(ex => completedSets[`W${currentWeek}-${activeDay}-${ex.id}`]).length;
             return (
             <div key={group} style={{ marginBottom: 20 }}>
               <div
@@ -420,7 +420,7 @@ export default function FitnessTracker() {
               </div>
 
               {!isCollapsed && exercises.map(ex => {
-                const logKey = `${activeDay}-${ex.id}`;
+                const logKey = `W${currentWeek}-${activeDay}-${ex.id}`;
                 const vid = getYouTubeId(ex.videoUrl);
                 const isPrimary = ex.isPrimary;
                 return (
@@ -459,18 +459,18 @@ export default function FitnessTracker() {
                         <div
                           className="set-dot"
                           onClick={() => {
-                            const key = `${activeDay}-${ex.id}`;
+                            const key = `W${currentWeek}-${activeDay}-${ex.id}`;
                             setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
                           }}
                           style={{
                             width: 20, height: 20, borderRadius: "50%",
-                            background: completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "transparent",
-                            border: `1.5px solid ${completedSets[`${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "#333"}`,
+                            background: completedSets[`W${currentWeek}-${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "transparent",
+                            border: `1.5px solid ${completedSets[`W${currentWeek}-${activeDay}-${ex.id}`] ? liftColors[day.primaryLift] : "#333"}`,
                             display: "flex", alignItems: "center", justifyContent: "center",
                             fontSize: 11, color: "#0d0d0f", fontWeight: "bold",
                           }}
                         >
-                          {completedSets[`${activeDay}-${ex.id}`] ? "✓" : ""}
+                          {completedSets[`W${currentWeek}-${activeDay}-${ex.id}`] ? "✓" : ""}
                         </div>
                       </div>
                     </div>
@@ -557,7 +557,7 @@ export default function FitnessTracker() {
               const { isDone, allDone } = getDayProgress(activeDay);
               const color = liftColors[day.primaryLift];
               return (
-                <button onClick={() => setManualDayDone(prev => ({ ...prev, [activeDay]: !prev[activeDay] }))} style={{
+                <button onClick={() => setManualDayDone(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: !prev[`W${currentWeek}-${activeDay}`] }))} style={{
                   background: isDone ? color : "transparent",
                   color: isDone ? "#0d0d0f" : "#555",
                   border: `1px solid ${isDone ? color : "#2a2a2f"}`,
@@ -579,8 +579,8 @@ export default function FitnessTracker() {
             </div>
             <textarea
               placeholder="How'd it feel today..."
-              value={notes[activeDay] || ""}
-              onChange={e => setNotes(prev => ({ ...prev, [activeDay]: e.target.value }))}
+              value={notes[`W${currentWeek}-${activeDay}`] || ""}
+              onChange={e => setNotes(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: e.target.value }))}
               style={{
                 width: "100%", minHeight: 80,
                 background: "#111114", border: "1px solid #1f1f24",
