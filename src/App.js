@@ -110,6 +110,7 @@ function VideoModal({ url, onClose }) {
     }}>
       <div onClick={e => e.stopPropagation()} style={{ position: "relative", width: "min(90vw,800px)", aspectRatio: "16/9" }}>
         <iframe
+          title="Exercise video"
           src={`https://www.youtube.com/embed/${vid}?autoplay=1`}
           style={{ width: "100%", height: "100%", border: "none", borderRadius: 8 }}
           allow="autoplay; fullscreen"
@@ -165,11 +166,6 @@ export default function FitnessTracker() {
   useEffect(() => { try { localStorage.setItem("ft_manualDayDone", JSON.stringify(manualDayDone)); } catch {} }, [manualDayDone]);
 
   const day = program[activeDay];
-
-  const toggleSet = (exId, setIdx) => {
-    const key = `${activeDay}-${exId}-${setIdx}`;
-    setCompletedSets(prev => ({ ...prev, [key]: !prev[key] }));
-  };
 
   const logWeight = (exId, weight) => {
     setWorkoutLog(prev => ({
