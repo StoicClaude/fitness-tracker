@@ -203,9 +203,15 @@ export default function FitnessTracker() {
   };
 
   const liftColors = {
-    "Squat": "#f4a261",
-    "Bench": "#4cc9f0",
-    "Deadlift": "#a8dadc",
+    "Squat": "#6e9e5e",
+    "Bench": "#6e9e5e",
+    "Deadlift": "#6e9e5e",
+  };
+
+  const primaryLiftWeights = {
+    "Day A": { lift: "Squat", weight: 150 },
+    "Day B": { lift: "Bench", weight: 150 },
+    "Day C": { lift: "Deadlift", weight: 150 },
   };
 
   // Progress calculations (exercise level, week-scoped)
@@ -234,61 +240,68 @@ export default function FitnessTracker() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#0d0d0f",
-      color: "#e8e8e2",
-      fontFamily: "'DM Mono', 'Courier New', monospace",
+      background: "#141210",
+      color: "#e2d9c8",
+      fontFamily: "'Instrument Sans', sans-serif",
       padding: "0",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
         * { box-sizing: border-box; }
-        ::-webkit-scrollbar { width: 4px; } 
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-        .day-btn:hover { background: #1a1a1f !important; }
-        .ex-row:hover { background: rgba(255,255,255,0.02) !important; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #141210; }
+        ::-webkit-scrollbar-thumb { background: #2a2520; border-radius: 2px; }
+        .day-btn:hover { opacity: 0.85 !important; }
+        .ex-row:hover { background: rgba(180,158,110,0.04) !important; }
         .tab-btn { transition: all 0.2s; }
         .set-dot { transition: all 0.15s; cursor: pointer; }
-        .set-dot:hover { transform: scale(1.2); }
-        .video-btn:hover { opacity: 0.8; }
+        .set-dot:hover { transform: scale(1.15); }
         input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       `}</style>
 
       {/* Header */}
       <div style={{
-        background: "#111114",
-        borderBottom: "1px solid #1f1f24",
-        padding: "20px 28px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
+        background: "#1a1612",
+        borderBottom: "1px solid #2a2520",
+        padding: "0",
       }}>
-        <div>
-          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: "#e8e8e2" }}>
-            KENT SANDS
+        {/* Empower brand bar */}
+        <div style={{
+          background: "#6e9e5e",
+          padding: "6px 28px",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+        }}>
+          <div style={{ fontFamily: "'Instrument Sans', sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: 4, color: "#141210" }}>
+            EMPOWER PT & PERFORMANCE
           </div>
-          <div style={{ fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase" }}>
-            Phase 3 · Isometric Control
-          </div>
+          <div style={{ fontSize: 9, letterSpacing: 3, color: "#141210", opacity: 0.6 }}>WAKEFIELD, MA</div>
         </div>
-        <div style={{ display: "flex", gap: 6 }}>
-          {["log", "progress"].map(t => (
-            <button key={t} className="tab-btn" onClick={() => setTab(t)} style={{
-              background: tab === t ? "#e8e8e2" : "transparent",
-              color: tab === t ? "#0d0d0f" : "#555",
-              border: "1px solid",
-              borderColor: tab === t ? "#e8e8e2" : "#2a2a2f",
-              borderRadius: 4,
-              padding: "7px 16px",
-              fontFamily: "inherit",
-              fontSize: 11,
-              letterSpacing: 2,
-              textTransform: "uppercase",
-              cursor: "pointer",
-            }}>
-              {t === "log" ? "Workout Log" : "Progress"}
-            </button>
-          ))}
+        {/* Client + nav row */}
+        <div style={{ padding: "16px 28px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: "#e2d9c8", lineHeight: 1 }}>
+              Kent Sands
+            </div>
+            <div style={{ fontSize: 10, color: "#5a5040", letterSpacing: 2, textTransform: "uppercase", marginTop: 4 }}>
+              Phase 3 · Isometric Control
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 4, background: "#231f1a", borderRadius: 8, padding: 4 }}>
+            {[["log", "Workout"], ["progress", "Progress"]].map(([t, label]) => (
+              <button key={t} className="tab-btn" onClick={() => setTab(t)} style={{
+                background: tab === t ? "#6e9e5e" : "transparent",
+                color: tab === t ? "#141210" : "#5a5040",
+                border: "none",
+                borderRadius: 6,
+                padding: "8px 18px",
+                fontFamily: "inherit",
+                fontSize: 11,
+                letterSpacing: 1,
+                fontWeight: tab === t ? 600 : 400,
+                cursor: "pointer",
+              }}>{label}</button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -297,20 +310,20 @@ export default function FitnessTracker() {
 
           {/* Week selector + weekly progress */}
           <div style={{
-            background: "#111114", border: "1px solid #1f1f24",
+            background: "#1a1612", border: "1px solid #2a2520",
             borderRadius: 8, padding: "16px 20px", marginBottom: 20,
           }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 12 }}>
               {/* Week picker */}
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 10, letterSpacing: 3, color: "#444", textTransform: "uppercase" }}>Current Week</span>
+                <span style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", textTransform: "uppercase" }}>Current Week</span>
                 <div style={{ display: "flex", gap: 4 }}>
                   {[1,2,3,4,5].map(w => (
                     <button key={w} onClick={() => setCurrentWeek(w)} style={{
                       width: 30, height: 30, borderRadius: 4,
                       background: currentWeek === w ? "#e8e8e2" : "transparent",
                       color: currentWeek === w ? "#0d0d0f" : "#444",
-                      border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#252528"}`,
+                      border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#2a2520"}`,
                       fontFamily: "inherit", fontSize: 12, cursor: "pointer", fontWeight: 500,
                     }}>{w}</button>
                   ))}
@@ -319,25 +332,25 @@ export default function FitnessTracker() {
               {/* Week summary stats */}
               <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#e8e8e2", lineHeight: 1 }}>
-                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#444" }}>/3</span>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
+                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#6a5a40" }}>/3</span>
                   </div>
-                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
+                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: "#e8e8e2", lineHeight: 1 }}>
-                    {weekDone}<span style={{ fontSize: 14, color: "#444" }}>/{weekTotal}</span>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
+                    {weekDone}<span style={{ fontSize: 14, color: "#6a5a40" }}>/{weekTotal}</span>
                   </div>
-                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
+                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
                 </div>
               </div>
             </div>
             {/* Week progress bar */}
-            <div style={{ height: 4, background: "#1a1a1f", borderRadius: 2, overflow: "hidden" }}>
+            <div style={{ height: 4, background: "#231f1a", borderRadius: 2, overflow: "hidden" }}>
               <div style={{
                 height: "100%", borderRadius: 2,
                 width: `${weekTotal > 0 ? (weekDone / weekTotal) * 100 : 0}%`,
-                background: "linear-gradient(90deg, #f4a261, #4cc9f0)",
+                background: "#6e9e5e",
                 transition: "width 0.3s ease",
               }} />
             </div>
@@ -352,8 +365,8 @@ export default function FitnessTracker() {
               return (
                 <button key={d} className="day-btn" onClick={() => setActiveDay(d)} style={{
                   flex: 1,
-                  background: activeDay === d ? "#1a1a1f" : "transparent",
-                  border: `1px solid ${isDone ? color : activeDay === d ? "#3a3a45" : "#1f1f24"}`,
+                  background: activeDay === d ? "#231f1a" : "transparent",
+                  border: `1px solid ${isDone ? color : activeDay === d ? "#3a3a45" : "#2a2520"}`,
                   borderRadius: 6,
                   padding: "14px 12px",
                   color: activeDay === d ? "#e8e8e2" : "#444",
@@ -369,22 +382,31 @@ export default function FitnessTracker() {
                     }}>✓</div>
                   )}
                   <div style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontFamily: "'Playfair Display', serif",
                     fontSize: 20, letterSpacing: 2,
                     color: activeDay === d ? color : isDone ? color : "#333"
                   }}>{d}</div>
                   <div style={{ fontSize: 10, letterSpacing: 1, marginTop: 2, marginBottom: 8, textTransform: "uppercase" }}>
                     {info.focus}
                   </div>
+                  {/* Primary lift weight */}
+                  {primaryLiftWeights[d] && (
+                    <div style={{ marginBottom: 8 }}>
+                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, color: activeDay === d ? color : "#3a3020", lineHeight: 1 }}>
+                        {primaryLiftWeights[d].weight}
+                      </span>
+                      <span style={{ fontSize: 9, color: "#4a3a28", marginLeft: 3 }}>lbs</span>
+                    </div>
+                  )}
                   {/* Per-day progress bar */}
-                  <div style={{ height: 3, background: "#1a1a1f", borderRadius: 2, overflow: "hidden", marginBottom: 6 }}>
+                  <div style={{ height: 3, background: "#231f1a", borderRadius: 2, overflow: "hidden", marginBottom: 6 }}>
                     <div style={{
                       height: "100%", borderRadius: 2,
                       width: `${pct}%`, background: color,
                       transition: "width 0.3s ease",
                     }} />
                   </div>
-                  <div style={{ fontSize: 9, color: "#444", letterSpacing: 1 }}>
+                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 1 }}>
                     {done}/{total} exercises
                   </div>
                 </button>
@@ -403,8 +425,8 @@ export default function FitnessTracker() {
                 onClick={() => setCollapsedGroups(prev => ({ ...prev, [collapseKey]: !prev[collapseKey] }))}
                 style={{
                   fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
-                  color: "#555", marginBottom: isCollapsed ? 0 : 10,
-                  paddingBottom: 8, borderBottom: "1px solid #1a1a1f",
+                  color: "#5a5040", marginBottom: isCollapsed ? 0 : 10,
+                  paddingBottom: 8, borderBottom: "1px solid #2a2520",
                   display: "flex", alignItems: "center", justifyContent: "space-between",
                   cursor: "pointer", userSelect: "none",
                 }}
@@ -414,7 +436,7 @@ export default function FitnessTracker() {
                   <span style={{ fontSize: 9, color: doneInGroup === exercises.length ? "#57cc99" : "#333" }}>
                     {doneInGroup}/{exercises.length}
                   </span>
-                  <span style={{ fontSize: 14, color: "#333", transform: isCollapsed ? "rotate(-90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform 0.2s" }}>
+                  <span style={{ fontSize: 14, color: "#4a3a28", transform: isCollapsed ? "rotate(-90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform 0.2s" }}>
                     ▾
                   </span>
                 </div>
@@ -450,7 +472,7 @@ export default function FitnessTracker() {
                           background: isChecked ? color : "transparent",
                           border: `1.5px solid ${isChecked ? color : "#333"}`,
                           display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: 12, color: "#0d0d0f", fontWeight: "bold",
+                          fontSize: 12, color: "#141210", fontWeight: "bold",
                         }}
                       >
                         {isChecked ? "✓" : ""}
@@ -473,7 +495,7 @@ export default function FitnessTracker() {
                           )}
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 3, flexWrap: "wrap" }}>
-                          <span style={{ fontSize: 11, color: "#444" }}>{ex.sets} sets · {ex.reps}</span>
+                          <span style={{ fontSize: 11, color: "#6a5a40" }}>{ex.sets} sets · {ex.reps}</span>
                           <button
                             onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: !prev[`${activeDay}-${ex.id}`] }))}
                             style={{
@@ -494,15 +516,15 @@ export default function FitnessTracker() {
                               value={workoutLog[logKey] || ""}
                               onChange={e => logWeight(ex.id, e.target.value)}
                               style={{
-                                width: 70, background: "#1a1a1f",
+                                width: 70, background: "#231f1a",
                                 border: `1px solid ${color}`, borderRadius: 4,
-                                color: "#e8e8e2", fontFamily: "inherit",
+                                color: "#e2d9c8", fontFamily: "inherit",
                                 fontSize: 13, padding: "5px 8px", outline: "none", textAlign: "center",
                               }}
                             />
-                            <span style={{ fontSize: 11, color: "#444" }}>lbs</span>
+                            <span style={{ fontSize: 11, color: "#6a5a40" }}>lbs</span>
                             <button onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: false }))} style={{
-                              background: "transparent", border: "none", color: "#444",
+                              background: "transparent", border: "none", color: "#6a5a40",
                               fontFamily: "inherit", fontSize: 11, cursor: "pointer", padding: "0 4px"
                             }}>done</button>
                           </div>
@@ -518,8 +540,8 @@ export default function FitnessTracker() {
                         style={{
                           flexShrink: 0,
                           width: 38, height: 38, borderRadius: "50%",
-                          background: vid ? color : "#1a1a1f",
-                          border: `1px solid ${vid ? color : "#252528"}`,
+                          background: vid ? color : "#231f1a",
+                          border: `1px solid ${vid ? color : "#2a2520"}`,
                           display: "flex", alignItems: "center", justifyContent: "center",
                           cursor: "pointer", fontSize: vid ? 14 : 16,
                           color: vid ? "#0d0d0f" : "#333",
@@ -539,19 +561,19 @@ export default function FitnessTracker() {
                           value={videoInput}
                           onChange={e => setVideoInput(e.target.value)}
                           style={{
-                            flex: 1, minWidth: 180, background: "#111114",
+                            flex: 1, minWidth: 180, background: "#1a1612",
                             border: "1px solid #333", borderRadius: 4,
-                            color: "#e8e8e2", fontFamily: "inherit",
+                            color: "#e2d9c8", fontFamily: "inherit",
                             fontSize: 11, padding: "6px 10px", outline: "none"
                           }}
                         />
                         <button onClick={() => saveVideoUrl(ex.id)} style={{
-                          background: color, color: "#0d0d0f", border: "none",
+                          background: color, color: "#141210", border: "none",
                           borderRadius: 4, padding: "6px 12px", fontFamily: "inherit",
                           fontSize: 11, cursor: "pointer", fontWeight: 600
                         }}>Save</button>
                         <button onClick={() => setEditingVideo(null)} style={{
-                          background: "transparent", color: "#555", border: "1px solid #2a2a2f",
+                          background: "transparent", color: "#5a5040", border: "1px solid #2a2a2f",
                           borderRadius: 4, padding: "6px 10px", fontFamily: "inherit",
                           fontSize: 11, cursor: "pointer"
                         }}>✕</button>
@@ -573,7 +595,7 @@ export default function FitnessTracker() {
                 <button onClick={() => setManualDayDone(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: !prev[`W${currentWeek}-${activeDay}`] }))} style={{
                   background: isDone ? color : "transparent",
                   color: isDone ? "#0d0d0f" : "#555",
-                  border: `1px solid ${isDone ? color : "#2a2a2f"}`,
+                  border: `1px solid ${isDone ? color : "#3a3020"}`,
                   borderRadius: 4, padding: "8px 18px",
                   fontFamily: "inherit", fontSize: 11,
                   letterSpacing: 2, textTransform: "uppercase",
@@ -587,7 +609,7 @@ export default function FitnessTracker() {
 
           {/* Notes */}
           <div style={{ marginTop: 20 }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 8, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 8, textTransform: "uppercase" }}>
               Session Notes
             </div>
             <textarea
@@ -596,7 +618,7 @@ export default function FitnessTracker() {
               onChange={e => setNotes(prev => ({ ...prev, [`W${currentWeek}-${activeDay}`]: e.target.value }))}
               style={{
                 width: "100%", minHeight: 80,
-                background: "#111114", border: "1px solid #1f1f24",
+                background: "#1a1612", border: "1px solid #2a2520",
                 borderRadius: 6, color: "#888", fontFamily: "inherit",
                 fontSize: 12, padding: "12px 14px", resize: "vertical",
                 outline: "none"
@@ -609,7 +631,7 @@ export default function FitnessTracker() {
       {tab === "progress" && (
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 20px" }}>
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 20, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 20, textTransform: "uppercase" }}>
               Primary Lift Progress
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
@@ -617,23 +639,23 @@ export default function FitnessTracker() {
                 const latest = history[history.length - 1]?.weight;
                 const prev = history[history.length - 2]?.weight;
                 const delta = latest && prev ? latest - prev : null;
-                const color = liftColors[lift] || "#4cc9f0";
+                const color = liftColors[lift] || "#6e9e5e";
                 return (
                   <div key={lift} style={{
-                    background: "#111114",
-                    border: "1px solid #1f1f24",
+                    background: "#1a1612",
+                    border: "1px solid #2a2520",
                     borderRadius: 8,
                     padding: "20px",
                     borderTop: `3px solid ${color}`
                   }}>
-                    <div style={{ fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>
+                    <div style={{ fontSize: 11, color: "#5a5040", letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>
                       {lift}
                     </div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 14 }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color, lineHeight: 1 }}>
+                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, color, lineHeight: 1 }}>
                         {latest}
                       </span>
-                      <span style={{ fontSize: 12, color: "#444" }}>lbs</span>
+                      <span style={{ fontSize: 12, color: "#6a5a40" }}>lbs</span>
                       {delta !== null && (
                         <span style={{
                           fontSize: 12,
@@ -647,7 +669,7 @@ export default function FitnessTracker() {
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
                       {history.map((h, i) => (
                         <div key={i} style={{ textAlign: "center" }}>
-                          <div style={{ fontSize: 9, color: "#333", letterSpacing: 1 }}>{h.week}</div>
+                          <div style={{ fontSize: 9, color: "#4a3a28", letterSpacing: 1 }}>{h.week}</div>
                           <div style={{ fontSize: 11, color: "#666" }}>{h.weight}</div>
                         </div>
                       ))}
@@ -660,12 +682,12 @@ export default function FitnessTracker() {
 
           {/* Log New Weight */}
           <div style={{
-            background: "#111114",
-            border: "1px solid #1f1f24",
+            background: "#1a1612",
+            border: "1px solid #2a2520",
             borderRadius: 8,
             padding: "20px"
           }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#444", marginBottom: 16, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 16, textTransform: "uppercase" }}>
               Log New Entry
             </div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
@@ -673,8 +695,8 @@ export default function FitnessTracker() {
                 value={newLiftEntry.lift}
                 onChange={e => setNewLiftEntry(n => ({ ...n, lift: e.target.value }))}
                 style={{
-                  background: "#0d0d0f", border: "1px solid #252528",
-                  borderRadius: 4, color: "#e8e8e2", fontFamily: "inherit",
+                  background: "#141210", border: "1px solid #252528",
+                  borderRadius: 4, color: "#e2d9c8", fontFamily: "inherit",
                   fontSize: 12, padding: "8px 12px", outline: "none"
                 }}
               >
@@ -686,9 +708,9 @@ export default function FitnessTracker() {
                 value={newLiftEntry.week}
                 onChange={e => setNewLiftEntry(n => ({ ...n, week: e.target.value }))}
                 style={{
-                  width: 120, background: "#0d0d0f",
+                  width: 120, background: "#141210",
                   border: "1px solid #252528", borderRadius: 4,
-                  color: "#e8e8e2", fontFamily: "inherit",
+                  color: "#e2d9c8", fontFamily: "inherit",
                   fontSize: 12, padding: "8px 12px", outline: "none"
                 }}
               />
@@ -698,14 +720,14 @@ export default function FitnessTracker() {
                 value={newLiftEntry.weight}
                 onChange={e => setNewLiftEntry(n => ({ ...n, weight: e.target.value }))}
                 style={{
-                  width: 130, background: "#0d0d0f",
+                  width: 130, background: "#141210",
                   border: "1px solid #252528", borderRadius: 4,
-                  color: "#e8e8e2", fontFamily: "inherit",
+                  color: "#e2d9c8", fontFamily: "inherit",
                   fontSize: 12, padding: "8px 12px", outline: "none"
                 }}
               />
               <button onClick={addLiftEntry} style={{
-                background: "#e8e8e2", color: "#0d0d0f",
+                background: "#6e9e5e", color: "#141210",
                 border: "none", borderRadius: 4,
                 padding: "8px 20px", fontFamily: "inherit",
                 fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
