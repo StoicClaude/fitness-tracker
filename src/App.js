@@ -157,6 +157,7 @@ export default function FitnessTracker() {
   const [collapsedGroups, setCollapsedGroups] = useState({});
   const [expandedWeight, setExpandedWeight] = useState({});
   const [expandedExNote, setExpandedExNote] = useState({});
+  const [weekPickerOpen, setWeekPickerOpen] = useState(false);
 
   // Persist all key state to localStorage whenever it changes
   useEffect(() => { try { localStorage.setItem("ft_program", JSON.stringify(program)); } catch {} }, [program]);
@@ -247,7 +248,7 @@ export default function FitnessTracker() {
       padding: "0",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Instrument+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
         * { box-sizing: border-box; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #141210; }
@@ -312,40 +313,68 @@ export default function FitnessTracker() {
       {tab === "log" && (
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 20px" }}>
 
-          {/* Week selector + weekly progress */}
+          {/* Week header */}
           <div style={{
             background: "#1a1612", border: "1px solid #2a2520",
-            borderRadius: 8, padding: "16px 20px", marginBottom: 20,
+            borderRadius: 8, marginBottom: 20, overflow: "hidden",
           }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-              {/* Week picker */}
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", textTransform: "uppercase" }}>Week</span>
-                <div style={{ display: "flex", gap: 4 }}>
-                  {[1,2,3,4,5].map(w => (
-                    <button key={w} onClick={() => setCurrentWeek(w)} style={{
-                      width: 30, height: 30, borderRadius: 4,
-                      background: currentWeek === w ? "#e8e8e2" : "transparent",
-                      color: currentWeek === w ? "#0d0d0f" : "#444",
-                      border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#2a2520"}`,
-                      fontFamily: "inherit", fontSize: 12, cursor: "pointer", fontWeight: 500,
-                    }}>{w}</button>
-                  ))}
+            <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              {/* Left: WEEK X tap-to-change */}
+              <div style={{ position: "relative" }}>
+                <div onClick={() => setWeekPickerOpen(p => !p)} style={{ cursor: "pointer", userSelect: "none" }}>
+                  <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 48, fontWeight: 700, lineHeight: 1, letterSpacing: 1 }}>
+                    <span style={{ color: "#d4e4c8" }}>WEEK </span>
+                    <span style={{ color: "#6e9e5e" }}>{currentWeek}</span>
+                  </div>
+                  <div style={{ fontSize: 9, letterSpacing: 4, color: "#3a4a3a", textTransform: "uppercase", marginTop: 3 }}>
+                    ISOMETRIC CONTROL
+                  </div>
                 </div>
+                {weekPickerOpen && (
+                  <div style={{
+                    position: "absolute", bottom: "100%", left: 0, marginBottom: 8,
+                    background: "#231f1a", border: "1px solid #2a2520", borderRadius: 6,
+                    padding: "8px", display: "flex", gap: 4, zIndex: 10,
+                  }}>
+                    {[1,2,3,4,5].map(w => (
+                      <button key={w} onClick={() => { setCurrentWeek(w); setWeekPickerOpen(false); }} style={{
+                        width: 32, height: 32, borderRadius: 4,
+                        background: currentWeek === w ? "#e8e8e2" : "transparent",
+                        color: currentWeek === w ? "#0d0d0f" : "#666",
+                        border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#3a3520"}`,
+                        fontFamily: "inherit", fontSize: 13, cursor: "pointer", fontWeight: 600,
+                      }}>{w}</button>
+                    ))}
+                  </div>
+                )}
               </div>
-              {/* Days done */}
-              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, color: "#e2d9c8", lineHeight: 1 }}>
-                  {weekDaysComplete}
+              {/* Right: A/B/C day dots + count */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {Object.keys(program).map(d => {
+                  const { isDone } = getDayProgress(d);
+                  const letter = d.replace("Day ", "");
+                  return (
+                    <div key={d} style={{
+                      width: 32, height: 32, borderRadius: 4,
+                      background: isDone ? "#6e9e5e" : "#1a2a1a",
+                      border: `1px solid ${isDone ? "#6e9e5e" : "#2a3a2a"}`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 13, fontWeight: 600,
+                      color: isDone ? "#141210" : "#4a6a4a",
+                    }}>
+                      {isDone ? "✓" : letter}
+                    </div>
+                  );
+                })}
+                <span style={{ fontSize: 14, color: "#6e9e5e", fontWeight: 600, marginLeft: 2 }}>
+                  {weekDaysComplete}/3
                 </span>
-                <span style={{ fontSize: 16, color: "#8a8070" }}>/3</span>
-                <span style={{ fontSize: 10, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginLeft: 4 }}>days</span>
               </div>
             </div>
-            {/* Week progress bar */}
-            <div style={{ height: 4, background: "#231f1a", borderRadius: 2, overflow: "hidden" }}>
+            {/* Full-width progress bar */}
+            <div style={{ height: 3, background: "#231f1a" }}>
               <div style={{
-                height: "100%", borderRadius: 2,
+                height: "100%",
                 width: `${weekTotal > 0 ? (weekDone / weekTotal) * 100 : 0}%`,
                 background: "#6e9e5e",
                 transition: "width 0.3s ease",
