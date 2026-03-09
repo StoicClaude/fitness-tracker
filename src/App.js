@@ -320,7 +320,7 @@ export default function FitnessTracker() {
           }}>
             <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               {/* Left: WEEK X tap-to-change */}
-              <div style={{ position: "relative" }}>
+              <div>
                 <div onClick={() => setWeekPickerOpen(p => !p)} style={{ cursor: "pointer", userSelect: "none" }}>
                   <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 48, fontWeight: 700, lineHeight: 1, letterSpacing: 1 }}>
                     <span style={{ color: "#d4e4c8" }}>WEEK </span>
@@ -331,18 +331,14 @@ export default function FitnessTracker() {
                   </div>
                 </div>
                 {weekPickerOpen && (
-                  <div style={{
-                    position: "absolute", bottom: "100%", left: 0, marginBottom: 8,
-                    background: "#231f1a", border: "1px solid #2a2520", borderRadius: 6,
-                    padding: "8px", display: "flex", gap: 4, zIndex: 100,
-                  }}>
+                  <div style={{ display: "flex", gap: 6, marginTop: 10 }}>
                     {[1,2,3,4,5].map(w => (
                       <button key={w} onClick={() => { setCurrentWeek(w); setWeekPickerOpen(false); }} style={{
-                        width: 32, height: 32, borderRadius: 4,
-                        background: currentWeek === w ? "#e8e8e2" : "transparent",
-                        color: currentWeek === w ? "#0d0d0f" : "#666",
+                        width: 34, height: 34, borderRadius: 4,
+                        background: currentWeek === w ? "#e8e8e2" : "#231f1a",
+                        color: currentWeek === w ? "#0d0d0f" : "#888",
                         border: `1px solid ${currentWeek === w ? "#e8e8e2" : "#3a3520"}`,
-                        fontFamily: "inherit", fontSize: 13, cursor: "pointer", fontWeight: 600,
+                        fontFamily: "inherit", fontSize: 14, cursor: "pointer", fontWeight: 600,
                       }}>{w}</button>
                     ))}
                   </div>
