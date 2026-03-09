@@ -156,6 +156,7 @@ export default function FitnessTracker() {
   });
   const [collapsedGroups, setCollapsedGroups] = useState({});
   const [expandedWeight, setExpandedWeight] = useState({});
+  const [expandedExNote, setExpandedExNote] = useState({});
 
   // Persist all key state to localStorage whenever it changes
   useEffect(() => { try { localStorage.setItem("ft_program", JSON.stringify(program)); } catch {} }, [program]);
@@ -259,6 +260,9 @@ export default function FitnessTracker() {
         input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       `}</style>
 
+      {/* Status bar cover for iOS safe area */}
+      <div style={{ background: "#6e9e5e", height: "env(safe-area-inset-top)" }} />
+
       {/* Header */}
       <div style={{
         background: "#1a1612",
@@ -316,7 +320,7 @@ export default function FitnessTracker() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 12 }}>
               {/* Week picker */}
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", textTransform: "uppercase" }}>Current Week</span>
+                <span style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", textTransform: "uppercase" }}>Current Week</span>
                 <div style={{ display: "flex", gap: 4 }}>
                   {[1,2,3,4,5].map(w => (
                     <button key={w} onClick={() => setCurrentWeek(w)} style={{
@@ -333,15 +337,15 @@ export default function FitnessTracker() {
               <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
-                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#6a5a40" }}>/3</span>
+                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#8a8070" }}>/3</span>
                   </div>
-                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
+                  <div style={{ fontSize: 9, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
-                    {weekDone}<span style={{ fontSize: 14, color: "#6a5a40" }}>/{weekTotal}</span>
+                    {weekDone}<span style={{ fontSize: 14, color: "#8a8070" }}>/{weekTotal}</span>
                   </div>
-                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
+                  <div style={{ fontSize: 9, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
                 </div>
               </div>
             </div>
@@ -406,7 +410,7 @@ export default function FitnessTracker() {
                       transition: "width 0.3s ease",
                     }} />
                   </div>
-                  <div style={{ fontSize: 9, color: "#6a5a40", letterSpacing: 1 }}>
+                  <div style={{ fontSize: 9, color: "#8a8070", letterSpacing: 1 }}>
                     {done}/{total} exercises
                   </div>
                 </button>
@@ -425,7 +429,7 @@ export default function FitnessTracker() {
                 onClick={() => setCollapsedGroups(prev => ({ ...prev, [collapseKey]: !prev[collapseKey] }))}
                 style={{
                   fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
-                  color: "#5a5040", marginBottom: isCollapsed ? 0 : 10,
+                  color: "#9a9080", marginBottom: isCollapsed ? 0 : 10,
                   paddingBottom: 8, borderBottom: "1px solid #2a2520",
                   display: "flex", alignItems: "center", justifyContent: "space-between",
                   cursor: "pointer", userSelect: "none",
@@ -482,7 +486,7 @@ export default function FitnessTracker() {
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{
                           fontSize: 13, fontWeight: 500,
-                          color: isPrimary ? color : isChecked ? "#555" : "#c8c8c0",
+                          color: isPrimary ? color : isChecked ? "#555" : "#e8e8e2",
                           display: "flex", alignItems: "center", gap: 6,
                           textDecoration: isChecked ? "line-through" : "none",
                         }}>
@@ -495,7 +499,7 @@ export default function FitnessTracker() {
                           )}
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 3, flexWrap: "wrap" }}>
-                          <span style={{ fontSize: 11, color: "#6a5a40" }}>{ex.sets} sets · {ex.reps}</span>
+                          <span style={{ fontSize: 11, color: "#8a8070" }}>{ex.sets} sets · {ex.reps}</span>
                           <button
                             onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: !prev[`${activeDay}-${ex.id}`] }))}
                             style={{
@@ -522,13 +526,51 @@ export default function FitnessTracker() {
                                 fontSize: 13, padding: "5px 8px", outline: "none", textAlign: "center",
                               }}
                             />
-                            <span style={{ fontSize: 11, color: "#6a5a40" }}>lbs</span>
+                            <span style={{ fontSize: 11, color: "#8a8070" }}>lbs</span>
                             <button onClick={() => setExpandedWeight(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: false }))} style={{
-                              background: "transparent", border: "none", color: "#6a5a40",
+                              background: "transparent", border: "none", color: "#8a8070",
                               fontFamily: "inherit", fontSize: 11, cursor: "pointer", padding: "0 4px"
                             }}>done</button>
                           </div>
                         )}
+                        {/* Per-exercise note */}
+                        {(() => {
+                          const noteKey = `W${currentWeek}-${activeDay}-${ex.id}-note`;
+                          const noteVal = notes[noteKey] || "";
+                          const noteExpanded = expandedExNote[`${activeDay}-${ex.id}`];
+                          if (noteExpanded) {
+                            return (
+                              <input
+                                type="text"
+                                autoFocus
+                                placeholder="Add a note..."
+                                value={noteVal}
+                                onChange={e => setNotes(prev => ({ ...prev, [noteKey]: e.target.value }))}
+                                onBlur={() => setExpandedExNote(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: false }))}
+                                style={{
+                                  display: "block", width: "100%", marginTop: 5,
+                                  background: "#1a1612", border: "1px solid #2a2520",
+                                  borderRadius: 4, color: "#c8c8c0", fontFamily: "inherit",
+                                  fontSize: 11, padding: "4px 8px", outline: "none",
+                                }}
+                              />
+                            );
+                          }
+                          if (noteVal) {
+                            return (
+                              <div
+                                onClick={() => setExpandedExNote(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: true }))}
+                                style={{ fontSize: 10, color: "#8a8070", marginTop: 5, cursor: "pointer" }}
+                              >{noteVal}</div>
+                            );
+                          }
+                          return (
+                            <div
+                              onClick={() => setExpandedExNote(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: true }))}
+                              style={{ fontSize: 10, color: "#4a3a28", marginTop: 5, cursor: "pointer" }}
+                            >+ note</div>
+                          );
+                        })()}
                       </div>
 
                       {/* Play button */}
@@ -609,7 +651,7 @@ export default function FitnessTracker() {
 
           {/* Notes */}
           <div style={{ marginTop: 20 }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 8, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", marginBottom: 8, textTransform: "uppercase" }}>
               Session Notes
             </div>
             <textarea
@@ -631,7 +673,7 @@ export default function FitnessTracker() {
       {tab === "progress" && (
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 20px" }}>
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 20, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", marginBottom: 20, textTransform: "uppercase" }}>
               Primary Lift Progress
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
@@ -655,7 +697,7 @@ export default function FitnessTracker() {
                       <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, color, lineHeight: 1 }}>
                         {latest}
                       </span>
-                      <span style={{ fontSize: 12, color: "#6a5a40" }}>lbs</span>
+                      <span style={{ fontSize: 12, color: "#8a8070" }}>lbs</span>
                       {delta !== null && (
                         <span style={{
                           fontSize: 12,
@@ -687,7 +729,7 @@ export default function FitnessTracker() {
             borderRadius: 8,
             padding: "20px"
           }}>
-            <div style={{ fontSize: 10, letterSpacing: 3, color: "#6a5a40", marginBottom: 16, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", marginBottom: 16, textTransform: "uppercase" }}>
               Log New Entry
             </div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
