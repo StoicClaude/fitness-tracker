@@ -316,7 +316,7 @@ export default function FitnessTracker() {
           {/* Week header */}
           <div style={{
             background: "#1a1612", border: "1px solid #2a2520",
-            borderRadius: 8, marginBottom: 20, overflow: "hidden",
+            borderRadius: 8, marginBottom: 20,
           }}>
             <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               {/* Left: WEEK X tap-to-change */}
@@ -334,7 +334,7 @@ export default function FitnessTracker() {
                   <div style={{
                     position: "absolute", bottom: "100%", left: 0, marginBottom: 8,
                     background: "#231f1a", border: "1px solid #2a2520", borderRadius: 6,
-                    padding: "8px", display: "flex", gap: 4, zIndex: 10,
+                    padding: "8px", display: "flex", gap: 4, zIndex: 100,
                   }}>
                     {[1,2,3,4,5].map(w => (
                       <button key={w} onClick={() => { setCurrentWeek(w); setWeekPickerOpen(false); }} style={{
@@ -372,7 +372,7 @@ export default function FitnessTracker() {
               </div>
             </div>
             {/* Full-width progress bar */}
-            <div style={{ height: 3, background: "#231f1a" }}>
+            <div style={{ height: 3, background: "#231f1a", borderRadius: "0 0 8px 8px", overflow: "hidden" }}>
               <div style={{
                 height: "100%",
                 width: `${weekTotal > 0 ? (weekDone / weekTotal) * 100 : 0}%`,
