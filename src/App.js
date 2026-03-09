@@ -318,7 +318,7 @@ export default function FitnessTracker() {
             background: "#1a1612", border: "1px solid #2a2520",
             borderRadius: 8, marginBottom: 20,
           }}>
-            <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ padding: "16px 20px 14px", display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
               {/* Left: WEEK X tap-to-change */}
               <div>
                 <div onClick={() => setWeekPickerOpen(p => !p)} style={{ cursor: "pointer", userSelect: "none" }}>
@@ -345,7 +345,7 @@ export default function FitnessTracker() {
                 )}
               </div>
               {/* Right: A/B/C day dots + count */}
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, paddingTop: 8 }}>
                 {Object.keys(program).map(d => {
                   const { isDone } = getDayProgress(d);
                   const letter = d.replace("Day ", "");
