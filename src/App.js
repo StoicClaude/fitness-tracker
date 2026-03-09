@@ -567,7 +567,7 @@ export default function FitnessTracker() {
                           return (
                             <div
                               onClick={() => setExpandedExNote(prev => ({ ...prev, [`${activeDay}-${ex.id}`]: true }))}
-                              style={{ fontSize: 10, color: "#4a3a28", marginTop: 5, cursor: "pointer" }}
+                              style={{ fontSize: 10, color: "#6e6050", marginTop: 5, cursor: "pointer" }}
                             >+ note</div>
                           );
                         })()}
