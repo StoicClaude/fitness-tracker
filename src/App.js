@@ -317,10 +317,10 @@ export default function FitnessTracker() {
             background: "#1a1612", border: "1px solid #2a2520",
             borderRadius: 8, padding: "16px 20px", marginBottom: 20,
           }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
               {/* Week picker */}
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", textTransform: "uppercase" }}>Current Week</span>
+                <span style={{ fontSize: 10, letterSpacing: 3, color: "#8a8070", textTransform: "uppercase" }}>Week</span>
                 <div style={{ display: "flex", gap: 4 }}>
                   {[1,2,3,4,5].map(w => (
                     <button key={w} onClick={() => setCurrentWeek(w)} style={{
@@ -333,20 +333,13 @@ export default function FitnessTracker() {
                   ))}
                 </div>
               </div>
-              {/* Week summary stats */}
-              <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
-                    {weekDaysComplete}<span style={{ fontSize: 14, color: "#8a8070" }}>/3</span>
-                  </div>
-                  <div style={{ fontSize: 9, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Days Done</div>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#e2d9c8", lineHeight: 1 }}>
-                    {weekDone}<span style={{ fontSize: 14, color: "#8a8070" }}>/{weekTotal}</span>
-                  </div>
-                  <div style={{ fontSize: 9, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginTop: 2 }}>Exercises Done</div>
-                </div>
+              {/* Days done */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, color: "#e2d9c8", lineHeight: 1 }}>
+                  {weekDaysComplete}
+                </span>
+                <span style={{ fontSize: 16, color: "#8a8070" }}>/3</span>
+                <span style={{ fontSize: 10, color: "#8a8070", letterSpacing: 2, textTransform: "uppercase", marginLeft: 4 }}>days</span>
               </div>
             </div>
             {/* Week progress bar */}
@@ -369,11 +362,11 @@ export default function FitnessTracker() {
               return (
                 <button key={d} className="day-btn" onClick={() => setActiveDay(d)} style={{
                   flex: 1,
-                  background: activeDay === d ? "#231f1a" : "transparent",
-                  border: `1px solid ${isDone ? color : activeDay === d ? "#3a3a45" : "#2a2520"}`,
+                  background: activeDay === d ? "#1e1c17" : "transparent",
+                  border: activeDay === d ? `2px solid ${color}` : `1px solid ${isDone ? color : "#2a2520"}`,
                   borderRadius: 6,
-                  padding: "14px 12px",
-                  color: activeDay === d ? "#e8e8e2" : "#444",
+                  padding: activeDay === d ? "13px 11px" : "14px 12px",
+                  color: activeDay === d ? "#e8e8e2" : "#888",
                   cursor: "pointer",
                   fontFamily: "inherit",
                   textAlign: "center",
@@ -387,10 +380,10 @@ export default function FitnessTracker() {
                   )}
                   <div style={{
                     fontFamily: "'Playfair Display', serif",
-                    fontSize: 20, letterSpacing: 2,
-                    color: activeDay === d ? color : isDone ? color : "#333"
+                    fontSize: 26, letterSpacing: 2,
+                    color: activeDay === d ? color : isDone ? color : "#666"
                   }}>{d}</div>
-                  <div style={{ fontSize: 10, letterSpacing: 1, marginTop: 2, marginBottom: 8, textTransform: "uppercase" }}>
+                  <div style={{ fontSize: 10, letterSpacing: 1, marginTop: 2, marginBottom: 8, textTransform: "uppercase", color: activeDay === d ? "#8a8070" : "#555" }}>
                     {info.focus}
                   </div>
                   {/* Primary lift weight */}
