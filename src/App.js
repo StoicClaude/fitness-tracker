@@ -66,9 +66,9 @@ const INITIAL_PROGRAM = {
 };
 
 const INITIAL_LIFT_HISTORY = {
-  "Squat": [{ week: "W1", weight: 155 }, { week: "W2", weight: 160 }, { week: "W3", weight: 165 }],
-  "Bench": [{ week: "W1", weight: 115 }, { week: "W2", weight: 120 }, { week: "W3", weight: 120 }],
-  "Deadlift": [{ week: "W1", weight: 185 }, { week: "W2", weight: 195 }, { week: "W3", weight: 200 }],
+  "Squat": [{ week: "W1", weight: 125 }, { week: "W2", weight: 135 }, { week: "W3", weight: 145 }, { week: "W4", weight: 155 }],
+  "Bench": [{ week: "W1", weight: 105 }, { week: "W2", weight: 115 }, { week: "W3", weight: 125 }, { week: "W4", weight: 135 }],
+  "Deadlift": [{ week: "W1", weight: 175 }, { week: "W2", weight: 185 }, { week: "W3", weight: 195 }, { week: "W4", weight: 205 }],
 };
 
 function getYouTubeId(url) {
@@ -132,9 +132,7 @@ export default function FitnessTracker() {
   const [program, setProgram] = useState(() => {
     try { const s = localStorage.getItem("ft_program"); return s ? JSON.parse(s) : INITIAL_PROGRAM; } catch { return INITIAL_PROGRAM; }
   });
-  const [liftHistory, setLiftHistory] = useState(() => {
-    try { const s = localStorage.getItem("ft_liftHistory"); return s ? JSON.parse(s) : INITIAL_LIFT_HISTORY; } catch { return INITIAL_LIFT_HISTORY; }
-  });
+  const [liftHistory, setLiftHistory] = useState(INITIAL_LIFT_HISTORY);
   const [workoutLog, setWorkoutLog] = useState(() => {
     try { const s = localStorage.getItem("ft_workoutLog"); return s ? JSON.parse(s) : {}; } catch { return {}; }
   });
@@ -211,9 +209,9 @@ export default function FitnessTracker() {
   };
 
   const primaryLiftWeights = {
-    "Day A": { lift: "Squat", weight: 150 },
-    "Day B": { lift: "Bench", weight: 150 },
-    "Day C": { lift: "Deadlift", weight: 150 },
+    "Day A": { lift: "Squat", weight: 155 },
+    "Day B": { lift: "Bench", weight: 135 },
+    "Day C": { lift: "Deadlift", weight: 205 },
   };
 
   // Progress calculations (exercise level, week-scoped)
