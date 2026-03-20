@@ -209,9 +209,9 @@ export default function FitnessTracker() {
   };
 
   const primaryLiftWeights = {
-    "Day A": { lift: "Squat", weight: 175 },
-    "Day B": { lift: "Bench", weight: 115 },
-    "Day C": { lift: "Deadlift", weight: 215 },
+    "Day A": { lift: "Squat", weight: liftHistory["Squat"]?.slice(-1)[0]?.weight || 0 },
+    "Day B": { lift: "Bench", weight: liftHistory["Bench"]?.slice(-1)[0]?.weight || 0 },
+    "Day C": { lift: "Deadlift", weight: liftHistory["Deadlift"]?.slice(-1)[0]?.weight || 0 },
   };
 
   // Progress calculations (exercise level, week-scoped)
