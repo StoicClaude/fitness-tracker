@@ -66,9 +66,9 @@ const INITIAL_PROGRAM = {
 };
 
 const INITIAL_LIFT_HISTORY = {
-  "Squat": [{ week: "W1", weight: 125 }, { week: "W2", weight: 135 }, { week: "W3", weight: 145 }, { week: "W4", weight: 155 }],
-  "Bench": [{ week: "W1", weight: 105 }, { week: "W2", weight: 115 }, { week: "W3", weight: 125 }, { week: "W4", weight: 135 }],
-  "Deadlift": [{ week: "W1", weight: 175 }, { week: "W2", weight: 185 }, { week: "W3", weight: 195 }, { week: "W4", weight: 205 }],
+  "Squat": [{ week: "W1", weight: 165 }, { week: "W2", weight: 175 }],
+  "Bench": [{ week: "W1", weight: 105 }, { week: "W2", weight: 115 }],
+  "Deadlift": [{ week: "W1", weight: 205 }, { week: "W2", weight: 215 }],
 };
 
 function getYouTubeId(url) {
@@ -147,7 +147,7 @@ export default function FitnessTracker() {
     try { const s = localStorage.getItem("ft_notes"); return s ? JSON.parse(s) : {}; } catch { return {}; }
   });
   const [currentWeek, setCurrentWeek] = useState(() => {
-    try { const s = localStorage.getItem("ft_currentWeek"); return s ? JSON.parse(s) : 4; } catch { return 4; }
+    try { const s = localStorage.getItem("ft_currentWeek"); return s ? JSON.parse(s) : 2; } catch { return 2; }
   });
   const [manualDayDone, setManualDayDone] = useState(() => {
     try { const s = localStorage.getItem("ft_manualDayDone"); return s ? JSON.parse(s) : {}; } catch { return {}; }
@@ -209,9 +209,9 @@ export default function FitnessTracker() {
   };
 
   const primaryLiftWeights = {
-    "Day A": { lift: "Squat", weight: 155 },
-    "Day B": { lift: "Bench", weight: 135 },
-    "Day C": { lift: "Deadlift", weight: 205 },
+    "Day A": { lift: "Squat", weight: 175 },
+    "Day B": { lift: "Bench", weight: 115 },
+    "Day C": { lift: "Deadlift", weight: 215 },
   };
 
   // Progress calculations (exercise level, week-scoped)
